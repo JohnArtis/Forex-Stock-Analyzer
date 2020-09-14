@@ -1,4 +1,4 @@
 import StockDefinition
-import gui
+from GUI import gui
 
 gui.gui()    
