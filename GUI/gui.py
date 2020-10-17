@@ -1,34 +1,22 @@
 import tkinter as tk
-import WebScraper
-
-#method for Menu Bar
-def MenuBar():
-    wMenu = tk.Menu(window)
-    filemenu = tk.Menu(wMenu, tearoff = 0)
-    filemenu.add_command(label = "Print", command = null)
-    wMenu.add_cascade(label = "File", menu = filemenu)
-#method for News Frame
-def NewsFrame():
-    News = tk.Menu
+import WindowCommands.menu as mn
+import WindowCommands.news as nw
+import WindowCommands.settings as st
 
 
-#method for Graph Frame outputs the stock Market
-#def GraphFrame():
-    #Graph =
+
+#def Graph(self, graph):
+    #show current Market and show a projected output
 
 
-#method for the Searchbar
-def Searchbar():
-    SearchInput = tk.Entry(bd = 5)
-    SearchInput.pack( side = tk.RIGHT)
-    ButtonSearch = tk.Button(text ="Search")
-    ButtonSearch.pack(side = tk.LEFT)
 
-#creates the main window for the GUI
 def gui():
+    uSet = st.userSettings()
+    
+    #creates the main window for the GUI
     window = tk.Tk()
-    MenuBar()
-    Searchbar()
-    #GraphFrame()
-    #NewsFrame()
+    canvas = tk.Canvas(window, height = uSet.getHeight(), width = uSet.getWidth())
+    mn.Menu(window)
+    nw.News(window)
+    canvas.pack()
     window.mainloop()
