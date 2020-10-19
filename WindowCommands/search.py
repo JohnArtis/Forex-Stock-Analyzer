@@ -32,12 +32,39 @@ class search(object):
 
 
 def Search(window):
+    uSet = st.userSettings()
+
+    #Search Bar which will take in user input
     searchFrame = tk.Frame(window)
     tk.Label(searchFrame, text = "Search: ").pack(side = tk.LEFT)
     edit = tk.Entry(searchFrame)
     edit.pack(side = tk.LEFT, fill = tk.BOTH, expand =1)
     edit.focus_set()
-
     searchButton = tk.Button(searchFrame, text = "Find",  )
     searchButton.pack(side = tk.RIGHT)
+
     searchFrame.pack(side = tk.TOP)
+
+    #Checkboxes for quick searches such as AUD, USD, AAPL
+    searchBoxes = tk.Frame(window)
+    AUD = tk.Checkbutton(searchBoxes, text = "AUD", bd = 4)
+    AUD.pack(side = tk.LEFT)
+    CAD = tk.Checkbutton(searchBoxes, text = "CAD", bd = 4)
+    CAD.pack(side = tk.LEFT)
+    EUR = tk.Checkbutton(searchBoxes, text = "EUR", bd = 4)
+    EUR.pack(side = tk.LEFT)
+    GBP = tk.Checkbutton(searchBoxes, text = "GBP", bd = 4)
+    GBP.pack(side = tk.LEFT)
+    NZD = tk.Checkbutton(searchBoxes, text = "NZD", bd = 4)
+    NZD.pack(side = tk.LEFT)
+    JPY = tk.Checkbutton(searchBoxes, text = "JPY", bd = 4)
+    JPY.pack(side = tk.LEFT)
+    USD = tk.Checkbutton(searchBoxes, text = "USD", bd = 4)
+    USD.pack(side = tk.LEFT)
+    
+    searchBoxes.pack(side = tk.TOP)
+
+    OutputFrame = tk.Frame(window, bg = "yellow", height = int(.3 * uSet.getHeight()), width = int(.98 * uSet.getWidth()))
+
+    OutputFrame.pack(side = tk.BOTTOM)
+   
