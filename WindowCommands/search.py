@@ -32,16 +32,18 @@ class search(object):
 
 #method to output the search links to window                
 def SearchResult(x, outputWindow):
+    text = tk.Text(outputWindow, height = 3, width = 3)
     userInput = re.split(' |/', x.get())
     for i in userInput:
         if(i == "AUD" or i == "CAD" or i == "EUR" or i == "USD" or i == "NZD" or i == "GBP"):
-            userSearch = search(i, userInput)
-            ws.webParser(userSearch.getStockName())
+            #userSearch = search(i, userInput)
+            #ws.webParser(userSearch.getStockName())
+            text.insert(tk.END, i)
     
     
 
-    text = tk.Text(outputWindow, height = 3, width = 3)
-    text.insert(tk.END, userInput)
+    
+    
     text.pack()
     text.config(state = "disabled")
 def placeHolder():
