@@ -1,4 +1,5 @@
-import StockDefinition
-import WindowCommands.gui as gui
-
-gui.gui()
+import GUI.gui as gui
+def main():
+    gui.gui()
+    
+main()

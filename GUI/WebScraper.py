@@ -5,26 +5,43 @@ import json
 import tkinter as tk
 from collections import OrderedDict
 import re
-import WindowCommands.settings as st
+#import WindowCommands.settings as st
 import csv
+import webbrowser 
+import tkHyperlinkManager as hyper
+from functools import partial
 
-
-
+#Grabs relevent News based off user search
 def webParser(x):
-    
-    URL = 'https://search.yahoo.com/'
+    url = 'https://www.google.com/search?q='
+    for i in x:
+        url = url + "+" + i
+    tempList = []
+    tempDict = {}
+    dict1 = {
+    }
+    count = 0
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content,'html.parser')
+    searchResults = soup.find_all("a")
+   
+    for i in searchResults: 
+        if("url?q=" in i.get("href") and "google" not in i.get("href")):
+            j = i.text,
+            k = i.get("href")
+            ktemp = re.split("[&]", k[7:])
+            tempDict = {
+                 "Title" : j,
+                 "Link" : ktemp[0]
+            }
+            if(tempDict in tempList):
+                count = 1
+            else:
+                tempList.append(tempDict)
 
-    values = {x : "currencies"}
-    #url = 'https://finance.yahoo.com/' + str(x) + "&sort=active"    
-    #req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})    
-    #html = urlopen(req)
-    data = parse.urlencode(values)
-    data = data.encode('utf-8') # data should be bytes
-    req = request.Request(URL, data)
-    resp = request.urlopen(req)
-    respData = resp.read()
-    print(respData)
-
+    return(tempList)
+            
+#gets charts for currencies and stocks
 def newsParser(x):
     url = 'https://finance.yahoo.com'
     page = requests.get(url)
@@ -79,10 +96,9 @@ def newsParser(x):
             for i in range(3):
                 tempList.pop(0)
             return tempList
-                
-                
+
+#Prints the data from the news to frames         
 def outPut(window, x):  
-    uSet = st.userSettings()
     text = tk.Text(window, height = 25, width = 60)
     outList = newsParser(x)
     
@@ -94,12 +110,20 @@ def outPut(window, x):
     if(x == 0):
         text.insert(tk.CURRENT,("{:<10} {:<10} {:<10} {:<10}".format('Currency  |', 'Open  |', 'Previous Close  |', 'Current Day' + '\n')))
         text.insert(tk.CURRENT,("{:<10}{:<10}{:<10}{:<10}").format('----------|','-------|----','---------------|','------------'+"\n"))
-        [text.insert(tk.CURRENT,("{:<10} {:<10} {:<10} {:<10}".format(item['title']+"  |",item['Open']+"  |",item['Previous Close']+"  |",item['Current Day'] + '\n'))) for item in outList]
+        [text.insert(tk.CURRENT,("{:<10} {:<10} {:<10} {:<10}".format(item['title']+"  |",item['Open']+"  |",item['Previous Close']+"  |",item['Current Day'] + '\n')))for item in outList]
         text.pack()
-    
-        
 
-def test(window):
-    text = tk.Text(window)
-    text.insert(tk.END,"Hello")
+#would be the prediction algorithm
+def formatGraph(window, x):
+    webParser(x)
+
+#prints webParser to the Search Frame
+def formatOutput(window, x, scrollbar):
+    text = tk.Text(window, yscrollcommand= scrollbar.set)
+    
+    hyperLink = hyper.HyperlinkManager(text)
+    tempList = list(filter(None, webParser(x)))
+
+    [text.insert(tk.CURRENT,("{:<10}".format(str(item['Title']) + '\n')),hyperLink.add(partial(webbrowser.open,item['Link']))) for item in tempList]
     text.pack()
+    
