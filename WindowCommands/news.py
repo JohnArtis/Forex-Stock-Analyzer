@@ -4,9 +4,6 @@ import WindowCommands.settings as st
 import GUI.WebScraper as ws
 
 
-def hello():
-    print("hello")
-
 def News(window):
     
     
@@ -22,3 +19,12 @@ def News(window):
     newsFramer = tk.Canvas(window, bg = "green", height = int(.25 * uSet.getHeight()), width = int(.23 * uSet.getWidth()) )
     ws.outPut(newsFramer, 0)
     newsFramer.pack(side = tk.RIGHT)
+
+    uSet = st.userSettings()
+def Graph(window):
+    #show current Market and show a projected output
+    uSet = st.userSettings()
+    newsFrame = tk.Canvas(window, bg = "gray", height = int(.25 * uSet.getHeight()), width = int(.4 * uSet.getWidth()))
+    #ws.formatGraph(newsFrame, "x")
+    newsFrame.pack(side = tk.RIGHT)
+
