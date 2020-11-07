@@ -84,9 +84,10 @@ def newsParser(x):
                     page3 = requests.get(stockLink)
                     soup = BeautifulSoup(page3.content, 'html.parser')
                     j = re.split("[)]", soup.title.text)
+                    jTemp = re.split("[(]", j[0])   
                     openNumber = [i.get_text(separator=u' ') for i in soup.find_all("td")]
                     tempDict = {
-                        "title" :  j[0]+")",
+                        "title" :  "("+jTemp[1]+")",
                         "href":  stockLink,
                         "Open": openNumber[3],
                         "Previous Price": openNumber[1],
@@ -103,14 +104,14 @@ def outPut(window, x):
     outList = newsParser(x)
     
     if(x == 1):
-        text.insert(tk.CURRENT,("{:<10} {:<10} {:<10} {:<10}".format('Stock  |', 'Open   |', 'Previous Price  |', 'Day Range' + '\n')))
-        
-        [text.insert(tk.CURRENT,("{:<10} {:<5} {:<5} {:<10}".format(item['title'],item['Open'],item['Previous Price'],item['Day Range'] + '\n'))) for item in outList]
+        text.insert(tk.CURRENT,("{:<5} {:<10} {:<10} {:<10}".format('Stock  |', 'Open   |', 'Previous Price  |', 'Day Range' + '\n')))
+        text.insert(tk.CURRENT,("{:<5}{:<10}{:<10}{:<10}").format('-------|','-------|----','---------------|','------------'+"\n"))
+        [text.insert(tk.CURRENT,("{:<10} {:<10} {:<10} {:<10}".format(item['title']+"  |",item['Open']+"  |",item['Previous Price']+"  |",item['Day Range'] + '\n'))) for item in outList]
         text.pack()
     if(x == 0):
         text.insert(tk.CURRENT,("{:<10} {:<10} {:<10} {:<10}".format('Currency  |', 'Open  |', 'Previous Close  |', 'Current Day' + '\n')))
-        text.insert(tk.CURRENT,("{:<10}{:<10}{:<10}{:<10}").format('----------|','-------|----','---------------|','------------'+"\n"))
-        [text.insert(tk.CURRENT,("{:<10} {:<10} {:<10} {:<10}".format(item['title']+"  |",item['Open']+"  |",item['Previous Close']+"  |",item['Current Day'] + '\n')))for item in outList]
+        text.insert(tk.CURRENT,("{:<10}{:<10}{:<10}{:<10}").format('----------|','---------|----','---------------|','------------'+"\n"))
+        [text.insert(tk.CURRENT,("{:<5} {:<10} {:<10} {:<10}".format(item['title']+"|",item['Open']+"  |",item['Previous Close']+"  |",item['Current Day'] + '\n')))for item in outList]
         text.pack()
 
 #would be the prediction algorithm

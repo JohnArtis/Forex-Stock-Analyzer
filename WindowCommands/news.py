@@ -2,7 +2,7 @@ import tkinter as tk
 import WindowCommands.search as sch
 import WindowCommands.settings as st
 import GUI.WebScraper as ws
-
+import GUI.stockPrediction as sp
 
 def News(window):
     
@@ -24,7 +24,7 @@ def News(window):
 def Graph(window):
     #show current Market and show a projected output
     uSet = st.userSettings()
-    newsFrame = tk.Canvas(window, bg = "gray", height = int(.25 * uSet.getHeight()), width = int(.4 * uSet.getWidth()))
-    #ws.formatGraph(newsFrame, "x")
+    newsFrame = tk.Canvas(window, bg = "gray", height = 100, width = 100)
+    sp.stockGraph(newsFrame, "USD")
     newsFrame.pack(side = tk.RIGHT)
 

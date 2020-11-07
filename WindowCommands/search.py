@@ -3,39 +3,44 @@ import WindowCommands.settings as st
 import GUI.WebScraper as ws
 import re
 
+def graphOutput(window, x):
+    print(x)
 #sets the graph to output only the selected searck
 def quickSearch(a, var):
     if(a.cget("text") == "AUD" and var.get() == 1):
-        print("AUD")
+        graphOutput("window",a.cget("text"))
         graphStock = a
     elif(a.cget("text") == "CAD" and var.get() == 1):
-        print("CAD")
+        graphOutput("window",a.cget("text"))
         graphStock = a
     elif(a.cget("text") == "EUR" and var.get() == 1):
-        print("EUR")
+        graphOutput("window",a.cget("text"))
         graphStock = a
     elif(a.cget("text") == "USD" and var.get() == 1):
-        print("USD")
+        graphOutput("window",a.cget("text"))
         graphStock = a
     elif(a.cget("text") == "NZD" and var.get() == 1):
-        print("NZD")
+        graphOutput("window",a.cget("text"))
         graphStock = a
     elif(a.cget("text") == "GBP" and var.get() == 1):
-        print("GBP")
+        graphOutput("window",a.cget("text"))
         graphStock = a
     elif(a.cget("text") == "JPY" and var.get() ==  1):
-        print("JPY")
+        graphOutput("window",a.cget("text"))
         graphStock = a
     
 #method to output the search links to window                
 def SearchResult(input, outPut, scrollbar):
     userInput = re.split(" ", input.get())
-    ws.formatOutput(outPut, userInput, scrollbar)
     outPut.delete("1.0","end")
     outPut.update()
+    ws.formatOutput(outPut, userInput, scrollbar)
     for i in userInput:
         if("AUD" in i or "CAD" in i or "EUR" in i or "USD" in i or "NZD" in i or "GBP" in i):
-            #userSearch = search(i, userInput)
+            j = re.split("[ |/]", i)
+            for i in j:
+                if("AUD" == i or "CAD" == i or "EUR" == i or "USD" == i or "NZD" == i or "GBP" == i):
+                    graphOutput("h",i)
             graphStock = i
     outPut.pack()
 
@@ -126,7 +131,7 @@ def Search(window):
     scrollbar = tk.Scrollbar(window)
     scrollbar.pack(side = tk.RIGHT, fill = tk.Y)
     #Output    
-    OutputFrame = tk.Frame(window, bg = "yellow", height = int(.25 * uSet.getHeight()), width = 1000)
+    OutputFrame = tk.Frame(window, bg = "white", height = int(.25 * uSet.getHeight()), width = 1000)
     text = tk.Text(OutputFrame, height = int(.25 * uSet.getHeight()), width = 900)
     OutputFrame.pack()
    
