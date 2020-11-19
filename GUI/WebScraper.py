@@ -83,11 +83,10 @@ def newsParser(x):
                     stockLink = url+ i.get("href")
                     page3 = requests.get(stockLink)
                     soup = BeautifulSoup(page3.content, 'html.parser')
-                    j = re.split("[)]", soup.title.text)
-                    jTemp = re.split("[(]", j[0])   
+                    jTemp = [re.split("[(]", i) for i in re.split("[)]", soup.title.text)]
                     openNumber = [i.get_text(separator=u' ') for i in soup.find_all("td")]
                     tempDict = {
-                        "title" :  "("+jTemp[1]+")",
+                        "title" :  "("+jTemp[0][1]+")",
                         "href":  stockLink,
                         "Open": openNumber[3],
                         "Previous Price": openNumber[1],
@@ -120,11 +119,9 @@ def formatGraph(window, x):
 
 #prints webParser to the Search Frame
 def formatOutput(window, x, scrollbar):
-    text = tk.Text(window, yscrollcommand= scrollbar.set)
-    
-    hyperLink = hyper.HyperlinkManager(text)
+    hyperLink = hyper.HyperlinkManager(window)
     tempList = list(filter(None, webParser(x)))
 
-    [text.insert(tk.CURRENT,("{:<10}".format(str(item['Title']) + '\n')),hyperLink.add(partial(webbrowser.open,item['Link']))) for item in tempList]
-    text.pack()
+    [window.insert(tk.CURRENT,("{:<10}".format(str(item['Title']) + '\n')),hyperLink.add(partial(webbrowser.open,item['Link']))) for item in tempList]
+    window.pack()
     

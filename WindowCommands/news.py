@@ -25,6 +25,6 @@ def Graph(window):
     #show current Market and show a projected output
     uSet = st.userSettings()
     newsFrame = tk.Canvas(window, bg = "gray", height = 100, width = 100)
-    sp.stockGraph(newsFrame, "USD")
+    sp.stockGraph(newsFrame,"AAPL")
     newsFrame.pack(side = tk.RIGHT)
 

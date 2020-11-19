@@ -1,33 +1,40 @@
 import tkinter as tk
 import WindowCommands.settings as st
 import GUI.WebScraper as ws
+import GUI.stockPrediction as sp
 import re
 
-def graphOutput(window, x):
-    print(x)
+
+
+#store the 60 days information to print
+def graphOutput(x):
+    file1 = open("SearchResults.txt","a")
+    file1.write("\n" + x + "\n")
+    file1.close()
+    sp.createReport(x)
 #sets the graph to output only the selected searck
 def quickSearch(a, var):
     if(a.cget("text") == "AUD" and var.get() == 1):
-        graphOutput("window",a.cget("text"))
-        graphStock = a
+        graphOutput(a.cget("text"))
+       
     elif(a.cget("text") == "CAD" and var.get() == 1):
-        graphOutput("window",a.cget("text"))
-        graphStock = a
+        graphOutput(a.cget("text"))
+        
     elif(a.cget("text") == "EUR" and var.get() == 1):
-        graphOutput("window",a.cget("text"))
-        graphStock = a
+        graphOutput(a.cget("text"))
+        
     elif(a.cget("text") == "USD" and var.get() == 1):
-        graphOutput("window",a.cget("text"))
-        graphStock = a
+        graphOutput(a.cget("text"))
+        
     elif(a.cget("text") == "NZD" and var.get() == 1):
-        graphOutput("window",a.cget("text"))
-        graphStock = a
+        graphOutput(a.cget("text"))
+        
     elif(a.cget("text") == "GBP" and var.get() == 1):
-        graphOutput("window",a.cget("text"))
-        graphStock = a
+        graphOutput(a.cget("text"))
+       
     elif(a.cget("text") == "JPY" and var.get() ==  1):
-        graphOutput("window",a.cget("text"))
-        graphStock = a
+        graphOutput(a.cget("text"))
+       
     
 #method to output the search links to window                
 def SearchResult(input, outPut, scrollbar):
@@ -40,8 +47,8 @@ def SearchResult(input, outPut, scrollbar):
             j = re.split("[ |/]", i)
             for i in j:
                 if("AUD" == i or "CAD" == i or "EUR" == i or "USD" == i or "NZD" == i or "GBP" == i):
-                    graphOutput("h",i)
-            graphStock = i
+                    #graphOutput(i)
+                    print()
     outPut.pack()
 
 #method that disables all quicksearches   
@@ -131,7 +138,7 @@ def Search(window):
     scrollbar = tk.Scrollbar(window)
     scrollbar.pack(side = tk.RIGHT, fill = tk.Y)
     #Output    
-    OutputFrame = tk.Frame(window, bg = "white", height = int(.25 * uSet.getHeight()), width = 1000)
-    text = tk.Text(OutputFrame, height = int(.25 * uSet.getHeight()), width = 900)
+    OutputFrame = tk.Frame(window, bg = "white", height = int(.15 * uSet.getHeight()), width = int(.50 * uSet.getWidth()))
+    OutputFrame.grid_propagate(False)
     OutputFrame.pack()
-   
+    text = tk.Text(OutputFrame, height = int(.25 * uSet.getHeight()), width = int(.09 * uSet.getWidth()))

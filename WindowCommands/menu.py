@@ -1,6 +1,6 @@
 import tkinter as tk
 import WindowCommands.settings as st
-
+import GUI.stockPrediction as sp
 def changeResolution(x, userSetting):
     #change the Resolution of the program
     if(x == 0):
@@ -33,7 +33,7 @@ def Menu(window, userSetting):
 
     printMenu = tk.Menu(menuBar,tearoff=0)
     menuBar.add_cascade(label = "Print", menu = printMenu)
-    printMenu.add_command(label = "Print", command = printPage)
+    printMenu.add_command(label = "Print Graph", command = printPage)
     settingMenu = tk.Menu(menuBar, tearoff=0)
     settingMenu.add_command(label = "1280 x 1024", command = changeResolution(0, userSetting))
     settingMenu.add_command(label = "1600 x 1200", command = changeResolution(1, userSetting))
